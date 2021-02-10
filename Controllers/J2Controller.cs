@@ -14,9 +14,14 @@ namespace n01458860Assignment2.Controllers
         /// <summary>
         /// Calculate the number of way for 2 dice to get the total of 10
         /// </summary>
-        /// <param name="m"></param>
-        /// <param name="n"></param>
-        /// <returns></returns>
+        /// <param name="m">the number of sides on the first die</param>
+        /// <param name="n">the number of sides on the second die</param>
+        /// <returns>
+        /// a message with the format "There are n ways to get the sum 10." 
+        /// </returns>
+        /// <example>
+        /// GET ../api/J2/DiceGame/6/8 -> response: There are 5 total ways to get the sum 10.
+        /// </example>
         [HttpGet]
         [Route("api/J2/DiceGame/{m}/{n}")]
         public string DiceGame(int m, int n)
