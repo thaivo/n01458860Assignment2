@@ -31,6 +31,10 @@ namespace n01458860Assignment2.Controllers
         [Route("api/j1/menu/{burger}/{drink}/{side}/{dessert}")]
         public string Menu(int burger, int drink, int side, int dessert)
         {
+            if (burger < 0 || burger > 3
+                || drink < 0 || drink > 3
+                || side < 0 || side > 3
+                || dessert < 0 || dessert > 3) return "Invalid input";
             string result = "Your total calorie count is ";
             int total = burgers[burger-1] + drinks[drink-1] + sides[side-1] + desserts[dessert-1];
             return result + total.ToString();

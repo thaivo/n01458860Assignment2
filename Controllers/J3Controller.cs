@@ -9,7 +9,7 @@ namespace n01458860Assignment2.Controllers
 {
     public class J3Controller : ApiController
     {
-        private const string NotSatisfiedStr = "Condition is not satisfied";
+        private const string invalidInputMessage = "Invalid input";
         /// <summary>
         /// https://cemc.math.uwaterloo.ca/contests/computing/2020/ccc/juniorEF.pdf
         /// 
@@ -25,59 +25,67 @@ namespace n01458860Assignment2.Controllers
         /// </returns>
         /// <example>
         /// GET api/j3/calculate/input?input=5&input=44&input=62&input=34&input=69&input=24&input=78&input=42&input=44&input=64&input=10
-        /// -> array of strings : ["23,9", "65,79"]
+        /// ->Response is : 
+        ///         <string>23, 9</string>
+        ///         <string>65, 79</string>
         /// </example>
         [HttpGet]
         [Route("api/j3/calculate/{input?}")]
-        public IEnumerable<string> calculate([FromUri] int[] input)
+        public IEnumerable<string> Calculate([FromUri] int[] input)
         {
-            //Valid input[0]
+            //Validate input[0]
             //input[0] is [2,100]
             //input[0] is the number of pairs of coordinate.
             // So (1 + input[0]*2) is the size of input array.
-            if (input != null 
-                && input[0] > 1 && input[0] <101 
-                && input[0] == ((input.Length - 1)/2)) 
+            if (input == null
+                || input[0] < 2 || input[0] > 100
+                || input[0] != ((input.Length - 1) / 2)) return new string[] { invalidInputMessage };
+            //Validate input array
+            //Because input[0] satisfies the condition of the problem
+            //so we only need to check element from the index 1 of the input.
+            for (int index = 1; index < input.Length; index++)
             {
-                int maxX, minX, maxY, minY, indexX, indexY;
-                //initialize max min
-                maxX = minX = input[1];
-                maxY = minY = input[2];
-                //array start from index 0
-                //Because 2 next indexes are assigned
-                //so we will start from index 3
-                int loopTimes = (input.Length - 3) / 2;
-                for(int count = 0; count < loopTimes; count++)
+                //if coordinates are not positive or greater than 99, invalid message of input will be thrown.
+                if (input[index] < 1 || input[index] > 99)
                 {
-                    indexX = 3 + count * 2;
-                    indexY = 4 + count * 2;
-                    if (maxX < input[indexX])
-                    {
-                        maxX = input[indexX];
-                    }
-                    else if(minX > input[indexX])
-                    {
-                        minX = input[indexX];
-                    }
-
-                    if(maxY < input[indexY])
-                    {
-                        maxY = input[indexY];
-                    }
-                    else if(minY > input[indexY])
-                    {
-                        minY = input[indexY];
-                    }
+                    return new string[] { invalidInputMessage };
                 }
-                //Because the input specification assumes that maxX and maxY are less then 100
-                //So we only need to check minX and minY
-                if (minX == 0 || minY == 0)
-                {
-                    return new string[] { NotSatisfiedStr };
-                }
-                return new string[] { "" + (minX - 1) + ", " + (minY - 1), "" + (maxX + 1) + ", " + (maxY + 1) };
             }
-            return new string[] { NotSatisfiedStr };
+
+            int maxX, minX, maxY, minY, indexX, indexY;
+            //initialize max min coordinates
+            maxX = minX = input[1];
+            maxY = minY = input[2];
+            //array start from index 0
+            //Because 2 next indexes are assigned
+            //so we will start from index 3
+            int loopTimes = (input.Length - 3) / 2;
+            for (int count = 0; count < loopTimes; count++)
+            {
+                //Odd indexes are X Coordinates
+                indexX = 3 + count * 2;
+                //Even indexes are Y Coordinates
+                indexY = 4 + count * 2;
+                if (maxX < input[indexX])
+                {
+                    maxX = input[indexX];
+                }
+                else if (minX > input[indexX])
+                {
+                    minX = input[indexX];
+                }
+
+                if (maxY < input[indexY])
+                {
+                    maxY = input[indexY];
+                }
+                else if (minY > input[indexY])
+                {
+                    minY = input[indexY];
+                }
+            }
+            return new string[] { "" + (minX - 1) + ", " + (minY - 1), "" + (maxX + 1) + ", " + (maxY + 1) };
+
         }
     }
 }

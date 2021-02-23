@@ -10,7 +10,7 @@ namespace n01458860Assignment2.Controllers
     public class J2Controller : ApiController
     {
         private const string message1 = "There are ";
-        private const string message2 = " ways to get the sum 10.";
+        private const string message3 = " to get the sum 10.";
         /// <summary>
         /// Calculate the number of way for 2 dice to get the total of 10
         /// </summary>
@@ -26,28 +26,37 @@ namespace n01458860Assignment2.Controllers
         [Route("api/J2/DiceGame/{m}/{n}")]
         public string DiceGame(int m, int n)
         {
+            //Validate input 
+            if (m < 1 || m > 1000 || n < 1 || n > 100) return "Invalid input";
+
             string result = "";
+            string message2 = " way";
             int way = m + n - 9;
-            int max = m;
-            int min = n;
-            if (m <= n)
+            
+            //we only need to find the number of ways basing on minimum value of inputs.
+            int min = m;
+            if (m > n)
             {
-                max = n;
-                min = m;
+                min = n;
             }
             
             if (way < 1)
             {
-                result = message1 + "0" + message2;
+                way = 0;
             }
-            else if (way < min && way < max)
+            else if (min >= 9)//min and max are equal to or greater than 9
             {
-                result = message1 + way.ToString() + message2;
+                way = 9;
             }
-            else if(way > min )
+            else if(min > 0 && min < 10 && way > min)
             {
-                result = message1 + min.ToString() + message2;
+                way = min;
             }
+            //if there are more than one way, we append s into message2;
+            if (way > 1) message2 += "s";
+
+            //combine result from messages;
+            result = message1 + way.ToString() + message2 + message3;
             return result;
         }
     }
