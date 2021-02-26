@@ -12,7 +12,9 @@ namespace n01458860Assignment2.Controllers
         private const string invalidInputMessage = "Invalid input";
         /// <summary>
         /// https://cemc.math.uwaterloo.ca/contests/computing/2020/ccc/juniorEF.pdf
-        /// 
+        /// Determining the coordinates of the smallest possible rectangular
+        /// frame such that each drop of paint lies inside the frame.Points on the frame are not considered
+        /// inside the frame
         /// </summary>
         /// <param name="input">
         /// An array of integers 
