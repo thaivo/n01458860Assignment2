@@ -9,8 +9,9 @@ namespace n01458860Assignment2.Controllers
 {
     public class J2Controller : ApiController
     {
-        private const string message1 = "There are ";
-        private const string message3 = " to get the sum 10.";
+        private const string MESSAGE1 = "There are ";
+        private const string WAY_STR = " way";
+        private const string MESSAGE2 = " to get the sum 10.";
         /// <summary>
         /// Calculate the number of way for 2 dice to get the total of 10
         /// </summary>
@@ -30,7 +31,7 @@ namespace n01458860Assignment2.Controllers
             if (m < 1 || m > 1000 || n < 1 || n > 100) return "Invalid input";
 
             string result = "";
-            string message2 = " way";
+            string message2 = WAY_STR;
             int way = m + n - 9;
             
             //we only need to find the number of ways basing on minimum value of inputs.
@@ -56,7 +57,7 @@ namespace n01458860Assignment2.Controllers
             if (way > 1) message2 += "s";
 
             //combine result from messages;
-            result = message1 + way.ToString() + message2 + message3;
+            result = MESSAGE1 + way.ToString() + message2 + MESSAGE2;
             return result;
         }
     }
